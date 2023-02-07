@@ -39,7 +39,7 @@ class Model {
 	/// </summary>
 	/// <param name="modelname">モデル名</param>
 	/// <returns>生成されたモデル</returns>
-	static Model* CreateFromOBJ(const std::string& modelname);
+	static Model* CreateFromOBJ(const std::string& modelname,bool smoothing = false);
 
   public: // メンバ関数
 	/// <summary>
@@ -51,13 +51,14 @@ class Model {
 	/// 初期化
 	/// </summary>
 	/// <param name="modelname">モデル名</param>
-	void Initialize(const std::string& modelname);
+	void Initialize(const std::string& modelname, bool smoothing);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
 	/// <param name="cmdList">命令発行先コマンドリスト</param>
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+
 
   private: // メンバ変数
 	// 名前
