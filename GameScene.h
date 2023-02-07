@@ -68,4 +68,8 @@ class GameScene {
 	Object3d* objSkydome = nullptr;
 	Object3d* objGround = nullptr;
 	Object3d* objFighter = nullptr;
+
+	Model* modelSphere = nullptr;
+	Object3d* objSphere = nullptr;
+
 };
