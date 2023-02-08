@@ -6,6 +6,7 @@
 #include "vector"
 #include "DirectionalLight.h"
 #include "PointLight.h"
+#include "SpotLight.h"
 
 class LightGroup
 {
@@ -22,6 +23,7 @@ private: // エイリアス
 public: // 定数
 	static const int DirLightNum = 3;
 	static const int PointLightNum = 3;
+	static const int SpotLightNum = 3;
 public: // サブクラス
 	// 定数バッファ用データ構造体 
 	struct ConstBufferData
@@ -33,6 +35,8 @@ public: // サブクラス
 		DirectionalLight::ConstBufferData dirLights[DirLightNum];
 		//点光源用
 		PointLight::ConstBufferData pointLights[PointLightNum];
+		//スポットライト
+		SpotLight::ConstBufferData spotLights[SpotLightNum];
 	};
 
 private:	//静的メンバ変数
@@ -70,6 +74,19 @@ public:	//メンバ関数
 	//点光源のライト距離減衰係数をセット
 	void SetPointLightAtten(int index, const XMFLOAT3& lightAtten);
 
+	//スポットライトの有効フラグをセット
+	void SetSpotLightActive(int index, bool active);
+	//スポットライトのライト方向をセット
+	void SetSpotLightDir(int index, const XMVECTOR& lightdir);
+	//スポットライトのライト座標をセット
+	void SetSpotLightPos(int index, const XMFLOAT3& lightpos);
+	//スポットライトのライト色をセット
+	void SetSpotLightColor(int index, const XMFLOAT3& lightcolor);
+	//スポットライトのライト減衰係数をセット
+	void SetSpotLightAtten(int index, const XMFLOAT3& lightAtten);
+	//スポットライトのライト減衰角度をセット
+	void SetSpotLightFactorAngle(int index, const XMFLOAT2& lightFactorAngle);
+
 	void Initialize();
 	void Update();
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex);
@@ -85,6 +102,7 @@ private: // メンバ変数
 	bool dirty = false;
 	//点高原の配列
 	PointLight pointLights[PointLightNum];
-
+	//スポットライトの配列
+	SpotLight spotLights[SpotLightNum];
 };
 

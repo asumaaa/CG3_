@@ -64,10 +64,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	lightGroup->SetDirLightActive(0, false);
 	lightGroup->SetDirLightActive(1, false);
 	lightGroup->SetDirLightActive(2, false);
-	lightGroup->SetPointLightActive(0, true);
-	pointLightPos[0] = 0.5f;
-	pointLightPos[1] = 5.0f;
-	pointLightPos[2] = 0.0f;
+	lightGroup->SetPointLightActive(0, false);
+	lightGroup->SetPointLightActive(1, false);
+	lightGroup->SetPointLightActive(2, false);
+	lightGroup->SetSpotLightActive(0, true);
 
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
@@ -98,9 +98,11 @@ void GameScene::Update()
 {
 	camera->Update();
 
-	lightGroup->SetPointLightPos(0, XMFLOAT3({0.0f,0.0f,0.0f}));
-	lightGroup->SetPointLightColor(0, XMFLOAT3(pointLightColor));
-	lightGroup->SetPointLightAtten(0, XMFLOAT3(pointLightAtten));
+	lightGroup->SetSpotLightDir(0, XMVECTOR({ spotLightDir[0],spotLightDir[1] ,spotLightDir[2] ,0 }));
+	lightGroup->SetSpotLightPos(0, XMFLOAT3(spotLightPos));
+	lightGroup->SetSpotLightColor(0, XMFLOAT3(spotLightColor));
+	lightGroup->SetSpotLightAtten(0, XMFLOAT3(spotLightAtten));
+	lightGroup->SetSpotLightFactorAngle(0, XMFLOAT2(spotLightFactorAngle));
 
 	lightGroup->Update();
 
