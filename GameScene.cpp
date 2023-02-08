@@ -49,12 +49,17 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
     // 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
 
+	////ライト生成
+	//light = DirectionalLight::Create();
+	////ライト色を設定
+	//light->SetLightColor({ 1,1,1 });
+	////3Dオブジェクトにライトをセット
+	//Object3d::SetLight(light);
+
 	//ライト生成
-	light = Light::Create();
-	//ライト色を設定
-	light->SetLightColor({ 1,1,1 });
+	lightGroup = LightGroup::Create();
 	//3Dオブジェクトにライトをセット
-	Object3d::SetLight(light);
+	Object3d::SetLightGroup(lightGroup);
 
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
@@ -84,7 +89,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 void GameScene::Update()
 {
 	camera->Update();
-	light->Update();
+	lightGroup->Update();
 
 	objSkydome->Update();
 	objGround->Update();

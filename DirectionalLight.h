@@ -5,7 +5,7 @@
 #include "d3dx12.h"
 #include "vector"
 
-class Light
+class DirectionalLight
 {
 private: // エイリアス 
 	// Microsoft::WRLを省略
@@ -23,6 +23,7 @@ public: // サブクラス
 	{
 		XMVECTOR lightv;// ライトへの方向を表すベクトル
 		XMFLOAT3 lightcolor; // ライトの色
+		unsigned int active;
 	};
 
 private: // 静的メンバ変数 //デバイス
@@ -40,7 +41,7 @@ public:
 	///インスタンス生成
 	/// </summary>
 	/// <returns>インスタンス </returns> 
-	static Light* Create();
+	static DirectionalLight* Create();
 
 
 	/// <summary> 
@@ -54,11 +55,33 @@ public:
 	/// <paramname = "lightdir" >ライト方向< / param>
 	void SetLightDir(const XMVECTOR & lightdir);
 
+	/// <summary>
+	/// ライト方向を取得
+	/// </summary>
+	/// <paramname = "lightdir" >ライト方向< / param>
+	XMVECTOR GetLightDir() { return lightdir; }
+
 	/// <summary> 
 	/// ライト色をセット
 	/// </summary>
 	/// <paramname = "lightcolor" >ライト色< / param>
 	void SetLightColor(const XMFLOAT3 & lightcolor);
+
+	/// <summary> 
+	/// ライト色を取得
+	/// </summary>
+	/// <paramname = "lightcolor" >ライト色< / param>
+	XMFLOAT3 GetLightColor() { return lightcolor; }
+
+	/// <summary> 
+	/// 有効フラグをセット
+	/// </summary>
+	inline void SetActive(bool active) { this->active = active; }
+
+	/// <summary> 
+	/// 有効チェック
+	/// </summary>
+	inline bool IsActive() { return active; };
 
 
 	void Initialize();
@@ -74,4 +97,6 @@ private: // メンバ変数
 	XMFLOAT3 lightcolor = { 1,1,1 };
 	//ダーティフラグ
 	bool dirty = false;
+	//有効フラグ
+	bool active = false;
 };
