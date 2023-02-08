@@ -67,7 +67,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	lightGroup->SetPointLightActive(0, false);
 	lightGroup->SetPointLightActive(1, false);
 	lightGroup->SetPointLightActive(2, false);
-	lightGroup->SetSpotLightActive(0, true);
+	lightGroup->SetSpotLightActive(0, false);
+	lightGroup->SetSpotLightActive(1, false);
+	lightGroup->SetSpotLightActive(2, false);
+	lightGroup->SetCircleShadowActive(0, true);
 
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
@@ -90,7 +93,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	modelSphere = Model::CreateFromOBJ("sphere",true);
 	objSphere = Object3d::Create(); 
 	objSphere->SetModel(modelSphere);
-	objFighter->SetPosition({ +1, 0, 0 }); 
+	objFighter->SetPosition(XMFLOAT3(fighterPos));
 	objSphere->SetPosition({ -1, 1, 0 });
 }
 
@@ -98,11 +101,15 @@ void GameScene::Update()
 {
 	camera->Update();
 
-	lightGroup->SetSpotLightDir(0, XMVECTOR({ spotLightDir[0],spotLightDir[1] ,spotLightDir[2] ,0 }));
+	/*lightGroup->SetSpotLightDir(0, XMVECTOR({ spotLightDir[0],spotLightDir[1] ,spotLightDir[2] ,0 }));
 	lightGroup->SetSpotLightPos(0, XMFLOAT3(spotLightPos));
 	lightGroup->SetSpotLightColor(0, XMFLOAT3(spotLightColor));
 	lightGroup->SetSpotLightAtten(0, XMFLOAT3(spotLightAtten));
-	lightGroup->SetSpotLightFactorAngle(0, XMFLOAT2(spotLightFactorAngle));
+	lightGroup->SetSpotLightFactorAngle(0, XMFLOAT2(spotLightFactorAngle));*/
+	lightGroup->SetCircleShadowDir(0, XMVECTOR({ circleShadowDir[0],circleShadowDir[1] ,circleShadowDir[2],0 }));
+	lightGroup->SetCircleShadowCasterPos(0, XMFLOAT3({ fighterPos[0],fighterPos[1], fighterPos[2] }));
+	lightGroup->SetCircleShadowAtten(0, XMFLOAT3(circleShadowAtten));
+	lightGroup->SetCircleShadowFactorAngle(0, XMFLOAT2(circleShadowFactorAngle));
 
 	lightGroup->Update();
 
@@ -117,6 +124,7 @@ void GameScene::Update()
 	rot.y += 1.0f;
 	objSphere->SetRotation(rot);
 	objFighter->SetRotation(rot);
+	objFighter->SetPosition(XMFLOAT3(fighterPos));
 
 	objSphere->Update();
 	objFighter->Update();

@@ -86,4 +86,10 @@ class GameScene {
 	float spotLightColor[3] = { 1,1,1 };
 	float spotLightAtten[3] = { 0.0f,0.0f,0.0f };
 	float spotLightFactorAngle[2] = { 20.0f,30.0f};
+
+	float circleShadowDir[3] = { 0,-1,0 };
+	float circleShadowAtten[3] = { 0.5f,0.6f,0.0f };
+	float circleShadowFactorAngle[2] = { 0.0f,0.5f};
+
+	float fighterPos[3] = { 1,0.0f,0 };
 };
