@@ -61,6 +61,31 @@ float4 main(VSOutput input) : SV_TARGET
 		}
 	}
 
+	for (int i = 0; i < POINTLIGHT_NUM; i++)
+	{
+		if (pointLights[i].active)
+		{
+			//ライトへのベクトル
+			float3 lightv = pointLights[i].lightpos - input.worldpos.xyz;
+			//ベクトルの長さ
+			float d = length(lightv);
+			//正規化し、単位ベクトルにする
+			lightv = normalize(lightv);
+			//距離減衰係数
+			float atten = 1.0f / (pointLights[i].lightatten.x + pointLights[i].lightatten.y * d +
+			pointLights[i].lightatten.z * d * d);
+			//ライトに向かうベクトルと法線の内積
+			float3 dotlightnormal = dot(lightv, input.normal);
+			//反射光ベクトル
+			float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
+			// 拡散反射光
+			float3 diffuse = dotlightnormal * m_diffuse;
+			//鏡面反射光
+			float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular; 
+			//全て加算する
+			shadecolor.rgb += atten * (diffuse + specular) * pointLights[i].lightcolor;
+		}
+	}
 
 	//シェーディングによる色で描画
 	return shadecolor * texcolor;

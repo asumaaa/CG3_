@@ -5,6 +5,7 @@
 #include "d3dx12.h"
 #include "vector"
 #include "DirectionalLight.h"
+#include "PointLight.h"
 
 class LightGroup
 {
@@ -20,6 +21,7 @@ private: // エイリアス
 
 public: // 定数
 	static const int DirLightNum = 3;
+	static const int PointLightNum = 3;
 public: // サブクラス
 	// 定数バッファ用データ構造体 
 	struct ConstBufferData
@@ -29,6 +31,8 @@ public: // サブクラス
 		float pad1;
 		//平行光源用
 		DirectionalLight::ConstBufferData dirLights[DirLightNum];
+		//点光源用
+		PointLight::ConstBufferData pointLights[PointLightNum];
 	};
 
 private:	//静的メンバ変数
@@ -57,6 +61,15 @@ public:	//メンバ関数
 	//標準のライト設定
 	void DefaultLightSetting();
 
+	//点光線の有効フラグをセット
+	void SetPointLightActive(int index, bool active);
+	//点高原のライト座標をセット
+	void SetPointLightPos(int index, const XMFLOAT3& lightpos);
+	//点光源のライト色をセット
+	void SetPointLightColor(int index, const XMFLOAT3& lightcolor);
+	//点光源のライト距離減衰係数をセット
+	void SetPointLightAtten(int index, const XMFLOAT3& lightAtten);
+
 	void Initialize();
 	void Update();
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex);
@@ -70,6 +83,8 @@ private: // メンバ変数
 	DirectionalLight dirLights[DirLightNum];
 	//ダーティフラグ
 	bool dirty = false;
+	//点高原の配列
+	PointLight pointLights[PointLightNum];
 
 };
 

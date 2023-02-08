@@ -61,6 +61,14 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//3Dオブジェクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
 
+	lightGroup->SetDirLightActive(0, false);
+	lightGroup->SetDirLightActive(1, false);
+	lightGroup->SetDirLightActive(2, false);
+	lightGroup->SetPointLightActive(0, true);
+	pointLightPos[0] = 0.5f;
+	pointLightPos[1] = 5.0f;
+	pointLightPos[2] = 0.0f;
+
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 	// 3Dオブジェクト生成
@@ -89,6 +97,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 void GameScene::Update()
 {
 	camera->Update();
+
+	lightGroup->SetPointLightPos(0, XMFLOAT3({0.0f,0.0f,0.0f}));
+	lightGroup->SetPointLightColor(0, XMFLOAT3(pointLightColor));
+	lightGroup->SetPointLightAtten(0, XMFLOAT3(pointLightAtten));
+
 	lightGroup->Update();
 
 	objSkydome->Update();
